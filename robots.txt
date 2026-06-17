@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://eloquentix.github.io/misc/sitemap.xml

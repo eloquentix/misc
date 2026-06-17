@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eloquentix · misc</title>
+<meta name="description" content="Miscellaneous writeups and experiments by Eloquentix — a software consultancy with 25 years of shipping." />
+<link rel="canonical" href="https://eloquentix.github.io/misc/" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#080b0f;--ink:#edeae3;--muted:#8b94a2;--faint:#525b69;--amber:#ffb020;--hair:rgba(255,255,255,.08)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Mono",monospace;min-height:100vh;display:flex;align-items:center;
+    background-image:radial-gradient(900px 600px at 80% -10%,rgba(255,176,32,.10),transparent 60%)}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 28px}
+  .mark{font-family:"Fraunces",serif;font-weight:600;font-size:34px;letter-spacing:-.01em}
+  .mark span{color:var(--amber)}
+  .tag{color:var(--faint);font-size:13px;margin-top:6px}
+  h2{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin:46px 0 16px}
+  a.item{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:20px 22px;border:1px solid var(--hair);border-radius:12px;
+    text-decoration:none;color:var(--ink);transition:border-color .2s,transform .2s,background .2s}
+  a.item:hover{border-color:var(--amber);transform:translateX(4px);background:rgba(255,176,32,.04)}
+  a.item .t{font-family:"Fraunces",serif;font-size:20px}
+  a.item .d{color:var(--muted);font-size:12.5px;margin-top:3px;font-family:"IBM Plex Mono"}
+  a.item .arrow{color:var(--amber);font-size:20px}
+  footer{margin-top:46px;color:var(--faint);font-size:12px}
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="mark">Eloquentix<span>.</span></div>
+    <div class="tag">misc · writeups &amp; experiments</div>
+
+    <h2>Writeups</h2>
+    <a class="item" href="./postmortem-macbook/">
+      <div>
+        <div class="t">It Wasn't Dead</div>
+        <div class="d">Forensic post-mortem — a MacBook Air M4 deep-discharge lockout misread as a dead logic board.</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <footer>© 2026 <a href="https://eloquentix.com">Eloquentix</a> · Software consultancy · 25 years of shipping</footer>
+  </div>
+</body>
+</html>
