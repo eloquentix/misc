@@ -108,7 +108,7 @@
       "name": "A deep-discharged MacBook still won't start on its charger. What else can revive it?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Connect it with a USB-C data and charging cable to a second, running Mac, as for a DFU firmware revive. In this post-mortem's November 2026 update, a MacBook Air M4 that had stopped starting after repeated deep discharges came back the moment it was cabled to a MacBook Air M2: its USB-C controller answered in about 2 seconds and it was running macOS about 6 minutes later. If that alone doesn't work, put it in DFU mode and use Revive in Apple Configurator, which reinstalls firmware without erasing data. Restore erases the Mac."
+        "text": "Connect it with a USB-C data and charging cable to a second, running Mac, as for a DFU firmware revive. In this post-mortem's November 2026 update, a MacBook Air M4 that had stopped starting after repeated deep discharges came back the moment it was cabled to a MacBook Air M2: its USB-C controller answered in about 2 seconds and it was running macOS again in under 2 minutes. If that alone doesn't work, put it in DFU mode and use Revive in Apple Configurator, which reinstalls firmware without erasing data. Restore erases the Mac."
       }
     }
   ]
@@ -351,7 +351,7 @@
 
   <!-- HERO -->
   <header class="hero">
-    <div class="kicker rv in">Incident Post-Mortem <span class="pulse"></span> Resolved · No Hardware Fault</div>
+    <div class="kicker rv in">Incident Post-Mortem <span class="pulse"></span> Reopened · Nov 2026</div>
     <h1 class="title rv in" data-d="1"><span class="it">It </span><span class="dead">Wasn't&nbsp;Dead.</span></h1>
     <p class="dek rv in" data-d="2">A MacBook Air M4. Two expert death certificates for the logic board. And a battery that had simply fallen <b>below the line</b> — drained to the lithium-ion protection floor by a phone hotspot it spent all night chasing.</p>
 
@@ -360,7 +360,7 @@
       <div><div class="lab">Window</div><div class="val">Jun 15 → 17, 2026</div></div>
       <div><div class="lab">Downtime</div><div class="val">~28 hours</div></div>
       <div><div class="lab">Root Cause</div><div class="val">Hotspot scan storm</div></div>
-      <div><div class="lab">Status</div><div class="val ok">RESOLVED</div></div>
+      <div><div class="lab">Status</div><div class="val sev">REOPENED</div></div>
     </div>
 
     <a class="upd rv in" data-d="4" href="#update-2026-11"><span class="badge">Update · Nov 7, 2026</span><span>It went dark again. This time <b>a second Mac woke it</b>, through a single USB-C cable.</span><span class="go">Read the update ↓</span></a>
@@ -550,27 +550,29 @@ config at fault .. <span class="r">tcpkeepalive=1</span> (batt) · <span class="
   <section class="update" id="update-2026-11">
     <div class="eyebrow rv">09 <span>— Update · Nov 7, 2026</span></div>
     <h2 class="rv">It went dark again. <em>Another Mac woke it.</em></h2>
-    <p class="lead rv">After several more deep-discharge episodes, the same MacBook Air M4 stopped starting altogether. This time the fix wasn't a charger. It was cabled with USB-C to a second, running Mac (a MacBook Air M2 on its own battery) as the first step of a DFU firmware revive, and it <b>came to life the moment the cable went in</b>. No key combo, no Apple Configurator, no firmware revive, no data lost.</p>
-    <p class="lead rv">The host Mac's logs recorded the whole revival from the other end of the cable.</p>
+    <p class="lead rv">After several more deep-discharge episodes, the same MacBook Air M4 stopped starting altogether. It spent the night with Apple chargers on every port and nothing happened. This time the fix wasn't a charger. It was cabled with USB-C to a second, running Mac (a MacBook Air M2 on its own battery) as the first step of a DFU firmware revive, and it <b>came to life the moment the cable went in</b>. No key combo, no Apple Configurator, no firmware revive, no data lost.</p>
+    <p class="lead rv">Both machines logged it: the host from the other end of the cable, the M4 in its own power log once it was back.</p>
 
     <div class="stats rv" style="margin-top:30px">
       <div class="stat"><div class="n green">2.3s</div><div class="u">to first answer</div><div class="c">From cable-in to the dead Mac's USB-C controller answering on Apple's own control channel.</div></div>
-      <div class="stat"><div class="n amber">4</div><div class="u">link resets</div><div class="c">In the first 80 seconds, consistent with its power rails coming up and re-negotiating.</div></div>
-      <div class="stat"><div class="n">6m12s</div><div class="u">plug → macOS</div><div class="c">Until it brought up USB networking: fully booted, running macOS 27.</div></div>
+      <div class="stat"><div class="n amber">13%</div><div class="u">already in the battery</div><div class="c">The M4's first log line on waking: charging, 13%. The overnight chargers had worked. It just wouldn't start.</div></div>
+      <div class="stat"><div class="n">&lt;2 min</div><div class="u">plug → macOS</div><div class="c">A resume from hibernation, not a cold boot. Open apps were still there, in the same session since Nov 1.</div></div>
       <div class="stat"><div class="n green">0</div><div class="u">DFU steps needed</div><div class="c">It revived before the DFU procedure even started.</div></div>
     </div>
 
-    <h3 class="rv">Timeline · America/New_York · host view</h3>
+    <h3 class="rv">Timeline · America/New_York · host + M4 logs</h3>
     <div class="tl rv">
-      <div class="ev crit"><div class="t">Jun → Nov</div><div class="body"><div class="h">Repeated trips to the protection floor</div><div class="s">More deep discharges, until it stopped starting at all.</div></div></div>
+      <div class="ev crit"><div class="t">11-06 17:41</div><div class="body"><div class="h">Low Power Sleep at 1%: hibernates</div><div class="s">Lid closed at 14% five hours earlier. Its second blackout in three days.</div></div></div>
+      <div class="ev crit"><div class="t">overnight</div><div class="body"><div class="h">Chargers on every port: it charges, but it never wakes</div><div class="s">By morning the pack holds 13%. No LED, no response to anything.</div></div></div>
       <div class="ev"><div class="t">11-07 13:14:45</div><div class="body"><div class="h">USB-C cable: running M2 → dead M4</div><div class="s">The M2 takes the data-host and power-source roles, feeding the M4 from its own battery.</div></div></div>
       <div class="ev good"><div class="t">13:14:47</div><div class="body"><div class="h">The dead Mac answers</div><div class="s">Apple vendor channel up: <code>[Port-USB-C@2/CC/SOP/AppleUVDM]</code></div></div></div>
-      <div class="ev"><div class="t">13:14 → 13:16</div><div class="body"><div class="h">Four detach / re-attach cycles</div><div class="s">The link resets while the M4 powers up and re-negotiates.</div></div></div>
-      <div class="ev good"><div class="t">13:20:57</div><div class="body"><div class="h">Running macOS again</div><div class="s">USB networking attaches on the host: <code>en7: attached (AppleUSBNCM)</code></div></div></div>
+      <div class="ev"><div class="t">13:14 → 13:16</div><div class="body"><div class="h">Four detach / re-attach cycles</div><div class="s">The link resets while the M4 resumes and its port controllers re-initialise.</div></div></div>
+      <div class="ev good"><div class="t">by 13:16:29</div><div class="body"><div class="h">The M4 is back in macOS</div><div class="s"><code>DarkWake from Hibernate : due to IOPortFeatureLDCM.measurement</code>, which means woken by a USB-C port event.</div></div></div>
+      <div class="ev"><div class="t">13:20:57</div><div class="body"><div class="h">USB networking comes up</div><div class="s">On the host: <code>en7: attached (AppleUSBNCM)</code>. By this point the M4 had been running for several minutes.</div></div></div>
     </div>
 
     <div class="term rv">
-      <div class="bar"><i></i><i></i><i></i><span>host side · system_profiler / ioreg / unified log · MacBook Air M2 · 11-07</span></div>
+      <div class="bar"><i></i><i></i><i></i><span>host side (M2) · system_profiler / ioreg / unified log  +  M4 side · pmset log · 11-07</span></div>
 <pre><span class="c"># what the host saw on the cable:</span>
 USB device ...... <span class="w">"Mac"</span>  Apple Inc.  0x05ac:0x1905  serial &lt;redacted&gt;  USB 2 · 480 Mb/s
 data role ....... <span class="k">Host</span>          power role ... <span class="g">Source</span>  (FedPortPowerRole=1)
@@ -580,23 +582,32 @@ host power ...... own battery, ExternalConnected=No · draw rose to <span class=
 13:14:45.510  [Port-USB-C@2: CC] active: <span class="g">YES</span>               <span class="c"># cable in</span>
 13:14:47.770  [Port-USB-C@2/CC/SOP/<span class="k">AppleUVDM</span>] registered   <span class="c"># its port controller answers</span>
 13:14:48 → 13:16:05  <span class="k">4×</span> detach / re-attach             <span class="c"># powering up</span>
-13:20:57.502  <span class="g">en7: attached</span>  (AppleUSBNCM)              <span class="c"># booted into macOS</span></pre>
+13:20:57.502  <span class="g">en7: attached</span>  (AppleUSBNCM)              <span class="c"># USB networking up</span>
+
+<span class="c"># the M4's own power log at resume (clock still frozen at hibernate time):</span>
+DarkWake from Hibernate : due to <span class="k">IOPortFeatureLDCM.measurement</span>   <span class="c"># a USB-C port event</span>
+handleChargingStateUpdate State:Charging VBUS:1 UISOC:<span class="g">13</span>       <span class="c"># charge was already there</span>
+DarkWake to FullWake from Hibernate : due to HID Activity
+last reboot ..... Nov 1 19:07                                   <span class="c"># resume, not a boot</span></pre>
     </div>
 
-    <p class="lead rv" style="margin-top:24px"><b>Why it worked is still an open question.</b> The host gave the M4 two things its charger doesn't. First, a steady <span class="hl">5 V supply (up to ~15 W)</span> that never steps up to the 20 V a charger negotiates. Second, an <span class="hl">Apple-to-Apple control channel</span>, the same one Apple Configurator uses to drive a Mac into DFU, which talks straight to the dead machine's USB-C port controller. The logs show the channel answering in 2.3 seconds and the host's battery draw climbing as it fed the M4. They can't yet say which of the two did the work. Next time, a USB-C power meter on the cable will settle it.</p>
+    <p class="lead rv" style="margin-top:24px"><b>Why it worked is half answered.</b> The host offered the M4 two things its chargers didn't. The first was a steady <span class="hl">5 V supply (up to ~15 W)</span>. That one is ruled out. In under two minutes, 15 W puts about 0.4 Wh into a pack that already held 13% (around 6 Wh), and the M4's log shows that charge was there the moment it woke. Power wasn't missing. The wake was. That leaves two candidates. One is the <span class="hl">fresh USB-C attach</span>: the M4's recorded wake reason is a port event, and a charger left plugged in all night sends no new event. The other is the <span class="hl">Apple-to-Apple control channel</span>, the one Apple Configurator uses to drive a Mac into DFU, which answered in 2.3 seconds. Next time, unplug a charger and plug it back into the same port first. If that wakes it, the attach event did the work.</p>
     <blockquote class="rv">When a Mac won't wake, the best charger in the room may be another Mac.</blockquote>
+
+    <p class="lead rv"><b>What keeps sending it to the floor.</b> The hotspot storm explained how fast it drained in June, but it wasn't the whole story. The battery's own coulomb counter shows about <span class="hl">120 mA (≈1.3 W) leaving the pack in every lid-closed sleep</span>, around 2.5% an hour, where a healthy M4 Air uses a small fraction of that. The draw is there with Wi-Fi and Bluetooth off, after reboots, and on macOS 15 and macOS 27 alike, and it shows in logs back to mid-June. The cells are balanced and healthy, so the energy is going into the machine, not leaking from the battery. Whether that's a hardware fault or a sleep-state bug is still open.</p>
 
     <h3 class="rv">Additional fixes · the revival ladder, cheapest first</h3>
     <table class="act rv">
       <thead><tr><th>Fix</th><th>What</th><th>Type</th></tr></thead>
       <tbody>
-        <tr><td class="fix">Sustained charge, hours</td><td>Apple charger and cable. Try MagSafe and both USB-C ports. Leave it overnight, not 15 minutes.</td><td><span class="tag">process</span></td></tr>
+        <tr><td class="fix">Sustained charge, hours</td><td>Apple charger and cable. Try MagSafe and both USB-C ports. Leave it overnight, not 15 minutes. This time it charged to 13% and still didn't start. If hours of charging don't wake it, the problem is waking, not power.</td><td><span class="tag">process</span></td></tr>
+        <tr><td class="fix">Re-plug</td><td>Unplug the charger and plug it back in, ideally into the DFU port. A fresh attach is a wake event. A charger that has sat there all night isn't. <b>Untested here.</b></td><td><span class="tag">revive</span></td></tr>
         <tr><td class="fix">Mac → Mac USB-C</td><td>Cable a running Mac's USB-C port to the dead one with a data + charging cable (not Thunderbolt 3). <b>This is what worked.</b></td><td><span class="tag">revive</span></td></tr>
         <tr><td class="fix">Inline USB-C power meter</td><td>About $20. 0 V means no power. 5 V at low current means it's trickling. 15–20 V means it's really charging. A voltage that keeps resetting means a failed handshake.</td><td><span class="tag">diagnose</span></td></tr>
         <tr><td class="fix">DFU → Revive</td><td>Apple Configurator on the second Mac. On a 2025+ MacBook Air, the DFU port is the left-side USB-C port nearest the front. <b>Revive</b> keeps data. <b>Restore</b> erases it.</td><td><span class="tag">revive</span></td></tr>
-        <tr><td class="fix">Battery before board</td><td>The SSD is soldered and encrypted, so a logic-board swap loses all data. Demand a battery test first.</td><td><span class="tag">process</span></td></tr>
-        <tr><td class="fix">Plan a battery service</td><td>Repeated trips to the protection floor wear lithium-ion cells. Expect to replace the pack.</td><td><span class="tag">hardware</span></td></tr>
-        <tr><td class="fix">system_profiler SPPowerDataType</td><td>Record cycle count, max capacity and condition now that it runs again. Results pending.</td><td><span class="tag">verify</span></td></tr>
+        <tr><td class="fix">Back up before service</td><td>The SSD is soldered and encrypted, so a logic-board swap loses all data. Back up first. The battery tests healthy and the drain goes into the board, so a battery swap alone won't fix this.</td><td><span class="tag">process</span></td></tr>
+        <tr><td class="fix">Find the sleep drain</td><td>Run an overnight shutdown test: shut down at a known %, leave it unplugged, check in the morning. If it drops with macOS fully off, it's hardware. If not, sleep in Safe Mode to rule out third-party software.</td><td><span class="tag">diagnose</span></td></tr>
+        <tr><td class="fix">system_profiler SPPowerDataType</td><td>Nov 7: 238 cycles, 94% maximum capacity, Condition Normal.</td><td><span class="tag">verify</span></td></tr>
       </tbody>
     </table>
   </section>
@@ -604,7 +615,7 @@ host power ...... own battery, ExternalConnected=No · draw rose to <span class=
   <footer>
     <div class="row">
       <span>POST-MORTEM · MacBook Air M4 · deep-discharge lockout</span>
-      <span>Resolved 2026-06-17 · no hardware fault · Updated 2026-11-07: recurred, revived via Mac-to-Mac USB-C</span>
+      <span>June incident resolved 2026-06-17 · Reopened 2026-11-07: recurred, revived via Mac-to-Mac USB-C · ~1.3 W sleep drain under investigation</span>
     </div>
     <div class="brand">
       <a class="mark" href="https://eloquentix.com">Eloquentix<span>.</span></a>
