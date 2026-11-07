@@ -6,7 +6,7 @@
 <!-- Primary SEO -->
 <title>It Wasn't Dead — MacBook Air M4 Deep-Discharge Post-Mortem | Eloquentix</title>
 <meta name="description" content="A forensic post-mortem by Eloquentix: a MacBook Air M4 that two experts declared a dead logic board was actually a battery drained below the lithium-ion protection floor by an iPhone hotspot it chased all night." />
-<meta name="keywords" content="MacBook Air M4 won't turn on, MacBook battery drained to zero, lithium-ion deep discharge, deep-discharge protection floor, Personal Hotspot battery drain, pmset tcpkeepalive, powernap battery, dead logic board misdiagnosis, macOS power management, Apple Silicon sleep wake, Eloquentix post-mortem" />
+<meta name="keywords" content="MacBook Air M4 won't turn on, MacBook battery drained to zero, lithium-ion deep discharge, deep-discharge protection floor, Personal Hotspot battery drain, pmset tcpkeepalive, powernap battery, dead logic board misdiagnosis, macOS power management, Apple Silicon sleep wake, revive dead MacBook with another Mac, Mac to Mac USB-C revive, Apple Configurator DFU revive, Eloquentix post-mortem" />
 <meta name="author" content="Eloquentix" />
 <meta name="publisher" content="Eloquentix" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
@@ -29,6 +29,7 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="It Wasn't Dead — a MacBook Air M4 deep-discharge post-mortem by Eloquentix" />
 <meta property="article:published_time" content="2026-06-17" />
+<meta property="article:modified_time" content="2026-11-07" />
 <meta property="article:author" content="Eloquentix" />
 
 <!-- Twitter -->
@@ -52,7 +53,7 @@
   "headline": "It Wasn't Dead — A MacBook Air M4 Deep-Discharge Post-Mortem",
   "description": "A forensic post-mortem: a MacBook Air M4 that two experts declared a dead logic board was actually a battery drained below the lithium-ion protection floor by an iPhone Personal Hotspot the laptop chased all night.",
   "datePublished": "2026-06-17",
-  "dateModified": "2026-06-17",
+  "dateModified": "2026-11-07",
   "inLanguage": "en",
   "keywords": "MacBook deep discharge, lithium-ion protection floor, Personal Hotspot battery drain, pmset tcpkeepalive, dead logic board misdiagnosis, macOS power management",
   "articleSection": "Engineering",
@@ -100,6 +101,14 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Disable network keepalive and Power Nap on battery with 'sudo pmset -b tcpkeepalive 0' and 'sudo pmset -b powernap 0', and turn off Wi-Fi and Bluetooth (or enable Airplane Mode) before storing the laptop."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "A deep-discharged MacBook still won't start on its charger. What else can revive it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Connect it with a USB-C data and charging cable to a second, running Mac, as for a DFU firmware revive. In this post-mortem's November 2026 update, a MacBook Air M4 that had stopped starting after repeated deep discharges came back the moment it was cabled to a MacBook Air M2: its USB-C controller answered in about 2 seconds and it was running macOS about 6 minutes later. If that alone doesn't work, put it in DFU mode and use Revive in Apple Configurator, which reinstalls firmware without erasing data. Restore erases the Mac."
       }
     }
   ]
@@ -252,8 +261,8 @@
   @media(max-width:680px){.tl::before{left:8px}}
   .ev{display:grid;grid-template-columns:120px 1fr;gap:26px;position:relative;padding:13px 0}
   @media(max-width:680px){.ev{grid-template-columns:1fr;gap:6px;padding-left:30px}}
-  .ev .t{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;padding-top:2px;white-space:nowrap}
-  @media(max-width:680px){.ev .t{text-align:left}}
+  .ev .t{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;padding:2px 14px 0 0;white-space:nowrap}
+  @media(max-width:680px){.ev .t{text-align:left;padding-right:0}}
   .ev .body{position:relative}
   .ev .body::before{content:"";position:absolute;left:-32px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--bg);border:2px solid var(--amber)}
   @media(max-width:680px){.ev .body::before{left:-30px}}
@@ -314,6 +323,17 @@
     line-height:1.35;color:#e7e3da;max-width:760px;
   }
 
+  /* ---------- update (2026-11) ---------- */
+  .upd{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:26px;padding:14px 18px;border:1px solid rgba(70,219,141,.28);border-radius:12px;background:rgba(70,219,141,.05);font-size:15px;color:#cdd2da;text-decoration:none;transition:border-color .2s,background .2s}
+  .upd:hover{border-color:rgba(70,219,141,.55);background:rgba(70,219,141,.08)}
+  .upd .badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);border:1px solid rgba(70,219,141,.4);border-radius:999px;padding:4px 10px;white-space:nowrap}
+  .upd b{color:#fff;font-weight:600}
+  .upd .go{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--green);white-space:nowrap}
+  section.update{border-top:1px solid rgba(70,219,141,.25)}
+  section.update .eyebrow{color:var(--green)}
+  section.update h2 em{color:var(--green)}
+  section.update h3{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:46px 0 4px}
+
   footer{padding:60px 0 80px;border-top:1px solid var(--hair);color:var(--faint);font-family:var(--mono);font-size:12px}
   footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
   footer a{color:var(--muted);text-decoration:none;transition:color .2s}
@@ -342,6 +362,8 @@
       <div><div class="lab">Root Cause</div><div class="val">Hotspot scan storm</div></div>
       <div><div class="lab">Status</div><div class="val ok">RESOLVED</div></div>
     </div>
+
+    <a class="upd rv in" data-d="4" href="#update-2026-11"><span class="badge">Update · Nov 7, 2026</span><span>It went dark again. This time <b>a second Mac woke it</b>, through a single USB-C cable.</span><span class="go">Read the update ↓</span></a>
   </header>
 
   <!-- THE CURVE -->
@@ -524,10 +546,65 @@ config at fault .. <span class="r">tcpkeepalive=1</span> (batt) · <span class="
     </div>
   </section>
 
+  <!-- UPDATE · 2026-11-07 -->
+  <section class="update" id="update-2026-11">
+    <div class="eyebrow rv">09 <span>— Update · Nov 7, 2026</span></div>
+    <h2 class="rv">It went dark again. <em>Another Mac woke it.</em></h2>
+    <p class="lead rv">After several more deep-discharge episodes, the same MacBook Air M4 stopped starting altogether. This time the fix wasn't a charger. It was cabled with USB-C to a second, running Mac (a MacBook Air M2 on its own battery) as the first step of a DFU firmware revive, and it <b>came to life the moment the cable went in</b>. No key combo, no Apple Configurator, no firmware revive, no data lost.</p>
+    <p class="lead rv">The host Mac's logs recorded the whole revival from the other end of the cable.</p>
+
+    <div class="stats rv" style="margin-top:30px">
+      <div class="stat"><div class="n green">2.3s</div><div class="u">to first answer</div><div class="c">From cable-in to the dead Mac's USB-C controller answering on Apple's own control channel.</div></div>
+      <div class="stat"><div class="n amber">4</div><div class="u">link resets</div><div class="c">In the first 80 seconds, consistent with its power rails coming up and re-negotiating.</div></div>
+      <div class="stat"><div class="n">6m12s</div><div class="u">plug → macOS</div><div class="c">Until it brought up USB networking: fully booted, running macOS 27.</div></div>
+      <div class="stat"><div class="n green">0</div><div class="u">DFU steps needed</div><div class="c">It revived before the DFU procedure even started.</div></div>
+    </div>
+
+    <h3 class="rv">Timeline · America/New_York · host view</h3>
+    <div class="tl rv">
+      <div class="ev crit"><div class="t">Jun → Nov</div><div class="body"><div class="h">Repeated trips to the protection floor</div><div class="s">More deep discharges, until it stopped starting at all.</div></div></div>
+      <div class="ev"><div class="t">11-07 13:14:45</div><div class="body"><div class="h">USB-C cable: running M2 → dead M4</div><div class="s">The M2 takes the data-host and power-source roles, feeding the M4 from its own battery.</div></div></div>
+      <div class="ev good"><div class="t">13:14:47</div><div class="body"><div class="h">The dead Mac answers</div><div class="s">Apple vendor channel up: <code>[Port-USB-C@2/CC/SOP/AppleUVDM]</code></div></div></div>
+      <div class="ev"><div class="t">13:14 → 13:16</div><div class="body"><div class="h">Four detach / re-attach cycles</div><div class="s">The link resets while the M4 powers up and re-negotiates.</div></div></div>
+      <div class="ev good"><div class="t">13:20:57</div><div class="body"><div class="h">Running macOS again</div><div class="s">USB networking attaches on the host: <code>en7: attached (AppleUSBNCM)</code></div></div></div>
+    </div>
+
+    <div class="term rv">
+      <div class="bar"><i></i><i></i><i></i><span>host side · system_profiler / ioreg / unified log · MacBook Air M2 · 11-07</span></div>
+<pre><span class="c"># what the host saw on the cable:</span>
+USB device ...... <span class="w">"Mac"</span>  Apple Inc.  0x05ac:0x1905  serial &lt;redacted&gt;  USB 2 · 480 Mb/s
+data role ....... <span class="k">Host</span>          power role ... <span class="g">Source</span>  (FedPortPowerRole=1)
+host power ...... own battery, ExternalConnected=No · draw rose to <span class="k">~18 W</span> while feeding the M4
+
+<span class="c"># the revival, from the host's unified log:</span>
+13:14:45.510  [Port-USB-C@2: CC] active: <span class="g">YES</span>               <span class="c"># cable in</span>
+13:14:47.770  [Port-USB-C@2/CC/SOP/<span class="k">AppleUVDM</span>] registered   <span class="c"># its port controller answers</span>
+13:14:48 → 13:16:05  <span class="k">4×</span> detach / re-attach             <span class="c"># powering up</span>
+13:20:57.502  <span class="g">en7: attached</span>  (AppleUSBNCM)              <span class="c"># booted into macOS</span></pre>
+    </div>
+
+    <p class="lead rv" style="margin-top:24px"><b>Why it worked is still an open question.</b> The host gave the M4 two things its charger doesn't. First, a steady <span class="hl">5 V supply (up to ~15 W)</span> that never steps up to the 20 V a charger negotiates. Second, an <span class="hl">Apple-to-Apple control channel</span>, the same one Apple Configurator uses to drive a Mac into DFU, which talks straight to the dead machine's USB-C port controller. The logs show the channel answering in 2.3 seconds and the host's battery draw climbing as it fed the M4. They can't yet say which of the two did the work. Next time, a USB-C power meter on the cable will settle it.</p>
+    <blockquote class="rv">When a Mac won't wake, the best charger in the room may be another Mac.</blockquote>
+
+    <h3 class="rv">Additional fixes · the revival ladder, cheapest first</h3>
+    <table class="act rv">
+      <thead><tr><th>Fix</th><th>What</th><th>Type</th></tr></thead>
+      <tbody>
+        <tr><td class="fix">Sustained charge, hours</td><td>Apple charger and cable. Try MagSafe and both USB-C ports. Leave it overnight, not 15 minutes.</td><td><span class="tag">process</span></td></tr>
+        <tr><td class="fix">Mac → Mac USB-C</td><td>Cable a running Mac's USB-C port to the dead one with a data + charging cable (not Thunderbolt 3). <b>This is what worked.</b></td><td><span class="tag">revive</span></td></tr>
+        <tr><td class="fix">Inline USB-C power meter</td><td>About $20. 0 V means no power. 5 V at low current means it's trickling. 15–20 V means it's really charging. A voltage that keeps resetting means a failed handshake.</td><td><span class="tag">diagnose</span></td></tr>
+        <tr><td class="fix">DFU → Revive</td><td>Apple Configurator on the second Mac. On a 2025+ MacBook Air, the DFU port is the left-side USB-C port nearest the front. <b>Revive</b> keeps data. <b>Restore</b> erases it.</td><td><span class="tag">revive</span></td></tr>
+        <tr><td class="fix">Battery before board</td><td>The SSD is soldered and encrypted, so a logic-board swap loses all data. Demand a battery test first.</td><td><span class="tag">process</span></td></tr>
+        <tr><td class="fix">Plan a battery service</td><td>Repeated trips to the protection floor wear lithium-ion cells. Expect to replace the pack.</td><td><span class="tag">hardware</span></td></tr>
+        <tr><td class="fix">system_profiler SPPowerDataType</td><td>Record cycle count, max capacity and condition now that it runs again. Results pending.</td><td><span class="tag">verify</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
   <footer>
     <div class="row">
       <span>POST-MORTEM · MacBook Air M4 · deep-discharge lockout</span>
-      <span>Resolved 2026-06-17 · no hardware fault</span>
+      <span>Resolved 2026-06-17 · no hardware fault · Updated 2026-11-07: recurred, revived via Mac-to-Mac USB-C</span>
     </div>
     <div class="brand">
       <a class="mark" href="https://eloquentix.com">Eloquentix<span>.</span></a>
